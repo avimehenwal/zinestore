@@ -1,0 +1,6 @@
+[build]
+  base = "frontend/"
+  command = "yarn generate"
+  publish = "frontend/dist"
+
+[context.deploy-preview]
