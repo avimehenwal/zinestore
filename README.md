@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4dafb7aa-ca5b-4002-8c53-9e5597dff425/deploy-status)](https://app.netlify.com/sites/zinestore/deploys)
+
 # zinestore
 :shopping_cart: zinestore
 
