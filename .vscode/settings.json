@@ -1,0 +1,9 @@
+{
+  "conventionalCommits.scopes": [
+    "vscode",
+    "firebase-fn",
+    "netlify",
+    "config",
+    "router",
+  ]
+}
