@@ -16,6 +16,7 @@ export default {
   */
   head: {
     title: process.env.npm_package_name || '',
+    script: [{ src: 'https://js.stripe.com/v3/' }],
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -81,5 +82,14 @@ export default {
         }
       }
     }
+  },
+  // https://nuxtjs.org/blog/moving-from-nuxtjs-dotenv-to-runtime-config
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL,
+    apiSecret: process.env.API_SECRET,
+    backend: process.env.backend,
+    emulator: process.env.emulator
+  },
+  privateRuntimeConfig: {
   }
 }

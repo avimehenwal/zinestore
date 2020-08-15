@@ -1,9 +1,28 @@
 # zinestore
 :shopping_cart: zinestore
 
-```
+```sh
 firebase functions:config:set someservice.key="THE API KEY" someservice.id="THE CLIENT ID"
 firebase functions:config:get
+```
+
+```js
+  mounted() {
+    // Xpath to test //script[contains(@src, 'stripe')]
+    const scripeScript = document.createElement("script");
+    scripeScript.setAttribute("src", "https://js.stripe.com/v3/");
+    document.head.appendChild(scripeScript);
+    scripeScript.onload = () => {
+      const msg = "stripe js loaded";
+      console.log(msg);
+      console.log(scripeScript);
+      // tell compiler to use global Stripe Object and avoid compilation error
+      // https://stackoverflow.com/questions/43457372/error-stripe-is-not-defined-no-undef
+      /* global Stripe */
+      this.stripe = Stripe(process.env.VUE_APP_KEY);
+    };
+    this.getStripeSessionId();
+  },
 ```
 
 #### :v: Get in touch with me

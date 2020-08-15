@@ -4,6 +4,7 @@ import * as functions from 'firebase-functions';
 // globals
 const stripe = require('stripe')(process.env.stripekey)
 const cors = require('cors')({ origin: true });
+const base = 'http://localhost:3000'
 
 /*
 *  [x] Return json
@@ -68,13 +69,13 @@ export const stripebackend = functions.https.onRequest((request, response) => {
           product_data: {
             name: 'T-shirt',
           },
-          unit_amount: 2000,        // in pennies
+          unit_amount: 1000,        // in pennies
         },
         quantity: 1,
       }],
       mode: 'payment',
-      success_url: 'http://localhost:8080/success?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'http://localhost:8080/failure',
+      success_url: base + '/success?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: base + '/failure',
     }, function (err: Object, session: Object) {
       response.send(session)
     })

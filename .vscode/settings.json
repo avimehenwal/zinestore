@@ -5,6 +5,7 @@
     "netlify",
     "config",
     "router",
-    "nuxt"
+    "nuxt",
+    "stripe"
   ]
 }
