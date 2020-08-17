@@ -1,6 +1,10 @@
 <template>
   <header>
-    <h1>Skyline Ivy</h1>
+    <h1>
+      <nuxt-link to='/'>
+        {{ $config.storeName }}
+      </nuxt-link>
+    </h1>
     <nav>
       <ul>
         <li>

@@ -27,6 +27,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/main.scss';
+
 section {
   margin-top: 60px;
 }
@@ -47,12 +49,13 @@ section {
 }
 
 h4 {
-  color: #d96528;
+  // color: #d96528;
+  color: $brandprimary;
   margin: 10px 0;
 }
 
 h2 {
-  color: #d96528;
+  color: $brandprimary;
   text-align: center;
   overflow: hidden;
 }
@@ -66,7 +69,8 @@ h2 span:before {
   display: block;
   height: 1px;
   width: 1000px;
-  background: #e6baa4;
+  // background: #e6baa4;
+  background: $brandprimary;
   position: absolute;
   top: 50%;
 }
@@ -79,7 +83,7 @@ h2 span:after {
 
 @media screen and (max-width: 699px) {
   .featureditems {
-    width: 83vw;
+    width: 82vw;
     margin-left: 5vw;
     div {
       padding: 10px 20px;

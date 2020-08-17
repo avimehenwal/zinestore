@@ -5,7 +5,8 @@ export const state = () => ({
   cartUIStatus: "idle",
   storedata: data,
   cart: [],
-  clientSecret: "" // Required to initiate the payment from the client
+  // Required to initiate the payment from the client
+  clientSecret: ""
 });
 
 export const getters = {

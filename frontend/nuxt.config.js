@@ -59,5 +59,12 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  publicRuntimeConfig: {
+    storeName: 'Zine Store'
+  },
+  privateRuntimeConfig: {
+    // use dotenv
+    apiSecret: process.env.API_SECRET || 'my_secret'
   }
 }
