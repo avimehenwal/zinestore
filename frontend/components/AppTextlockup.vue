@@ -1,23 +1,24 @@
 <template>
-  <div class="textlockup">
+  <section class="textlockup">
     <div class="img">
       <slot name="img">
-        <img src="/shoe1.jpg" alt="shoe" />
+        <!-- <img src="/shoe1.jpg" alt="shoe" /> -->
+        <img svg-inline src="../static/artwork/faceCry.svg" alt="Face" />
       </slot>
     </div>
     <div class="new">
       <slot name="new">New</slot>
     </div>
     <div class="sale">
-      <slot name="sale">Men Shoes</slot>
+      <slot name="sale">Zine</slot>
     </div>
     <div class="collection">
       <slot name="collection">Collection</slot>
     </div>
     <div class="details">
-      <slot name="details">Street Style New Fashion</slot>
+      <slot name="details">New zine every week</slot>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -25,12 +26,20 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/main.scss';
+
+/*
+  Text Lock styles
+    https://css-tricks.com/snippets/svg/text-lock-up/
+    https://css-tricks.com/creating-web-type-lockup/
+*/
+
 .textlockup {
   display: grid;
   grid-template-columns: 50px 100px 1fr;
   grid-template-rows: 50px 50px 100px 20px 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
   .new {
     grid-area: 1 / 1 / 5 / 4;
     font-size: 23vmin;
@@ -40,7 +49,7 @@ export default {};
   .sale {
     grid-area: 2 / 2 / 3 / 4;
     font-size: 6.5vmin;
-    color: #d96528;
+    color: $brandprimary;
     font-family: "PT Serif", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, "Helvetica Neue", Arial, sans-serif;
   }
@@ -60,9 +69,13 @@ export default {};
     max-width: 950px;
     grid-area: 1 / 3 / 6 / 4;
     img {
-      width: 95%;
+      width: 55%;
     }
   }
+  svg > path:nth-child(16) {
+    fill: $brandprimary;
+  }
+
 }
 
 @media screen and (max-width: 650px) {

@@ -19,13 +19,19 @@
 import AppTextlockup from "~/components/AppTextlockup.vue";
 import AppSalesBoxes from "~/components/AppSalesBoxes.vue";
 import AppFeaturedProducts from "~/components/AppFeaturedProducts.vue";
+// import Logo from '@/assets/faceCry.svg';
+
 
 export default {
   components: {
     AppTextlockup,
     AppSalesBoxes,
-    AppFeaturedProducts
-  }
+    AppFeaturedProducts,
+    // Logo
+  },
+  data: () => ({
+    path: '/artwork/faceCry.svg'
+  }),
 };
 </script>
 

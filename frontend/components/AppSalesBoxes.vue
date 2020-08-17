@@ -1,10 +1,27 @@
 <template>
   <section class="boxes">
-    <div v-for="(box, i) in boxes" :key="box.heading" :class="`box${i}`">
-      <img :src="box.icon" alt="service icon" />
-      <h4>{{ box.heading }}</h4>
-      <p>{{ box.details }}</p>
+    <!-- <div v-for="(box, i) in boxes" :key="box.heading" :class="`box${i}`"> -->
+    <div>
+      <img svg-inline class="icon" src="../static/icon-package.svg" alt="example" />
+
+      <h4>{{ boxes[0].heading }}</h4>
+      <p>{{ boxes[0].details }}</p>
     </div>
+
+    <div>
+      <img svg-inline class="icon" src="../static/icon-cal.svg" alt="example" />
+
+      <h4>{{ boxes[1].heading }}</h4>
+      <p>{{ boxes[1].details }}</p>
+    </div>
+
+    <div>
+      <img svg-inline class="icon" src="../static/icon-service.svg" alt="example" />
+
+      <h4>{{ boxes[2].heading }}</h4>
+      <p>{{ boxes[2].details }}</p>
+    </div>
+
   </section>
 </template>
 
@@ -35,10 +52,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/main.scss';
+
+section svg g {
+  // fill: $brandsecondary;
+  fill: $brandprimary;
+}
+
 .boxes {
   margin: 70px 0;
   div {
-    border: 1px solid #ddd;
+    border: 1px solid $borderGrey;
     min-height: 150px;
     justify-self: center;
     align-self: center;

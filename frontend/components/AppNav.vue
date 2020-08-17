@@ -39,6 +39,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/main.scss';
+
+$darkenPercent: 10%;
+
 header {
   display: flex;
   justify-content: center;
@@ -53,8 +57,8 @@ nav {
   margin-top: 30px;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid darken($borderGrey, $darkenPercent);
+  border-bottom: 1px solid darken($borderGrey, $darkenPercent);
   padding: 8px 0;
   ul {
     padding-left: 0;
@@ -64,13 +68,14 @@ nav {
       letter-spacing: 0.1em;
       font-size: 13px;
       padding: 0 20px;
-      border-left: 1px solid #ddd;
-      border-right: 1px solid #ddd;
+      border-left: 1px solid $borderGrey;
+      border-right: 1px solid $borderGrey;
       position: relative;
+      font-weight: normal;
       a {
         color: black;
         &:hover {
-          color: #c14103;
+          color: $brandprimary;
         }
       }
     }
