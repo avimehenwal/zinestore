@@ -6,6 +6,7 @@
     "config",
     "router",
     "nuxt",
-    "stripe"
+    "stripe",
+    "structure"
   ]
 }
