@@ -1,9 +1,13 @@
 import axios from "axios";
 import data from "~/static/storedata.json";
 
+
 export const state = () => ({
   cartUIStatus: "idle",
   storedata: data,
+  env: process.env.NODE_ENV,
+  dev: process.env.NODE_ENV !== 'production',
+  endpoint: (process.env.NODE_ENV === 'production') ? process.env.prodURI : process.env.devURI,
   cart: [],
   // Required to initiate the payment from the client
   clientSecret: ""
@@ -66,25 +70,29 @@ export const mutations = {
 };
 
 export const actions = {
-  async createPaymentIntent({ getters, commit }) {
+  async createPaymentIntent({ getters, commit, state }) {
     try {
       // Create a PaymentIntent with the information about the order
-      const result = await axios.post(
-        "https://ecommerce-netlify.netlify.app/.netlify/functions/create-payment-intent",
+      console.log(state.endpoint)
+      const result = await this.$axios.$post(
+        // this.$config.backend,
+        state.endpoint,
         {
           items: getters.cartItems
         },
         {
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Access-Control-Request-Method": "*",
+            "Access-Control-Request-Headers": "*",
           }
         }
       );
-
-      if (result.data.clientSecret) {
+      console.log(result.stripe.id)
+      if (result.stripe.id) {
         // Store a reference to the client secret created by the PaymentIntent
         // This secret will be used to finalize the payment from the client
-        commit("setClientSecret", result.data.clientSecret);
+        commit("setClientSecret", result.stripe.id);
       }
     } catch (e) {
       console.log("error", e);

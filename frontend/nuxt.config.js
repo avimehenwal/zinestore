@@ -50,7 +50,12 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: [
+    '@nuxtjs/axios',
+  ],
+  axios: {
+    // proxyHeaders: false
+  },
   /*
    ** Build configuration
    */
@@ -78,7 +83,17 @@ export default {
     }
   },
   publicRuntimeConfig: {
-    storeName: 'Zine Store'
+    storeName: 'Zine Store',
+    _backend: 'http://localhost:5001/estore-1597310330087/us-central1/createPaymentIntent',
+    // backend: process.env.backend
+    // dev: process.env.NODE_ENV !== 'production'
+    get backend() {
+      return this._backend
+    },
+    set backend(value) {
+      this._backend = value
+    },
+    clientToken: process.env.API_SECRET
   },
   privateRuntimeConfig: {
     // use dotenv

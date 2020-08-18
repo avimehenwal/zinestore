@@ -4,14 +4,14 @@ import os = require('os');
 import products from './database.json'
 import * as cors from 'cors'
 // const corsHandler = cors({ origin: true });
-// const cors = require('cors')({origin: true});
+const cors = require('cors')({ origin: true });
 // app.use(cors);
 
 // globals
 const stripe = require('stripe')(process.env.stripekey)
-let base = (os.hostname().match(/dynac/)) ? 'http://localhost:3000' : 'https://zinestore.netlify.app/'
+const base = (os.hostname().match(/dynac/)) ? 'http://localhost:3000' : 'https://zinestore.netlify.app/'
 functions.logger.info('Using RootURL : ' + base)
-let result: object = {}
+const result: object = {}
 
 
 function getProductById(id: string): object {
@@ -34,6 +34,9 @@ function getHandler(querystring: object): object {
   return result
 }
 
+/*  shape
+    {"id":"9d436e98-1dc9-4f21-9587-76d4c0255e33","quantity":1}
+*/
 function postHandler(req) {
   result['handler'] = 'POST'
   if (req.hasOwnProperty('query')) {
@@ -41,9 +44,9 @@ function postHandler(req) {
   }
   if (req.hasOwnProperty('body')) {
     result['arguments'] = req.body
-    if ('productId' in req.body) {
+    if ('items' in req.body) {
       // get product details from DB
-      result['productData'] = getProductById(req.body.productId)
+      result['productData'] = getProductById(req.body.items[0])
       result['code'] = 200
     } else {
       result['error'] = {
@@ -79,7 +82,7 @@ function otherHandler(rawBody): object {
 */
 
 export const helloWorld = functions.https.onRequest((request, response) => {
-  const result = {
+  const resultO = {
     body: request.body,
     query: request.query,
     method: request.method,
@@ -91,22 +94,22 @@ export const helloWorld = functions.https.onRequest((request, response) => {
   // RESTful http verb handler
   switch (request.method) {
     case 'GET': {
-      result.data = 'GET handler called'
+      resultO.data = 'GET handler called'
       break;
     }
     case 'POST': {
-      result['data'] = 'POST handler called'
+      resultO['data'] = 'POST handler called'
       break;
     }
     default: {
-      result['data'] = 'OTHER handler called'
+      resultO['data'] = 'OTHER handler called'
       break;
     }
   }
 
-  functions.logger.debug(result.query)
+  functions.logger.debug(resultO.query)
   // Terminate redirect, end, send
-  response.status(200).json(result);
+  response.status(200).json(resultO);
 });
 
 
@@ -118,63 +121,80 @@ export const helloWorld = functions.https.onRequest((request, response) => {
   Access to XMLHttpRequest at 'http://---' from origin 'http://192.168.0.106:8080' has been blocked by CORS policy:
   No 'Access-Control-Allow-Origin' header is present on the requested resource.
 */
-export const createPaymentIntent = functions.https.onRequest(async (request, response) => {
+export const createPaymentIntent = functions.https.onRequest((request, response) => {
   // when trying to use async, await, error
   // Did you mean to mark this function as 'async'?
 
   /* Loose firebase logging! very bad */
-  // corsHandler(request, response, () => {})
   /* Accept CORS */
   response.set('Access-Control-Allow-Origin', '*');
+  response.set("Access-Control-Allow-Methods", "*")
+  response.set("Access-Control-Allow-Headers", "*")
+  cors(request, response, () => {
 
-  /* Fresh Object, else reuses the old global object */
-  let res: object = {}
 
-  switch (request.method) {
-    case 'GET': {
-      res = getHandler(request.query)
-      break;
+    /* Fresh Object, else reuses the old global object */
+    let res: object = {}
+
+    switch (request.method) {
+      case 'GET': {
+        res = getHandler(request.query)
+        break;
+      }
+      case 'POST': {
+        res = postHandler(request)
+        break;
+      }
+      default: {
+        res = otherHandler(request)
+        break;
+      }
     }
-    case 'POST': {
-      res = postHandler(request)
-      break;
-    }
-    default: {
-      res = otherHandler(request)
-      break;
-    }
-  }
 
-  const session: object = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [{
-      price_data: {
-        currency: 'usd',
-        // currency: 'EUR',
-        product_data: {
-          name: res['productData'].name,
-        },
-        // in pennies
-        unit_amount: Number(res['productData'].price),
-      },
-      quantity: Number(request.body.quantity),
-    }],
-    mode: 'payment',
-    success_url: base + '/success?session_id={CHECKOUT_SESSION_ID}',
-    cancel_url: base + '/failure',
-  })
-
-  res['stripe'] = session
-  /* ISSUE
+    try {
+      stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              // currency: 'EUR',
+              product_data: {
+                // name: res['productData'].name,
+                name: 'Bernie Gledhill',
+              },
+              // in pennies
+              // unit_amount: Number(res['productData'].price),
+              unit_amount: 1200,
+            },
+            // quantity: Number(request.body.quantity),
+            quantity: 1
+          }
+        ],
+        mode: 'payment',
+        // success_url: base + '/success?session_id={CHECKOUT_SESSION_ID}',
+        success_url: base + '/',
+        cancel_url: base + '/failure',
+      }).then(session => {
+        res['stripe'] = session
+      })
+    } catch (err) {
+      // TypeError: failed to fetch
+      functions.logger.error(err)
+      res['code'] = 400
+      res['error'] = err
+    }
+    /* ISSUE
     send a req with productID and then without productID => both will contain product info
     and vice versa
-  */
-  functions.logger.warn(res['stripe'])
-  if (res.hasOwnProperty('error')) {
-    response.status(res['code']).json(res)
-  } else {
-    response.status(res['code']).json(res)
-  }
+    */
+    functions.logger.warn(res['stripe'])
+    if (res.hasOwnProperty('error')) {
+      response.status(res['code']).json(res)
+    } else {
+      response.status(res['code']).json(res)
+    }
+  })
 })
 
 /*

@@ -21,9 +21,12 @@
       </button>
     </section>
 
+
     <section v-else-if="cartUIStatus === 'failure'">
       <p>Oops, something went wrong. Redirecting you to your cart to try again.</p>
     </section>
+
+    <button @click="checkout">Checkout</button>
 
     <app-sales-boxes />
   </div>
@@ -34,7 +37,8 @@ import AppLoader from "~/components/AppLoader.vue";
 import AppCartSteps from "~/components/AppCartSteps.vue";
 import AppSalesBoxes from "~/components/AppSalesBoxes.vue";
 import AppCartDisplay from "~/components/AppCartDisplay.vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+
 
 export default {
   components: {
@@ -44,8 +48,43 @@ export default {
     AppLoader
   },
   computed: {
-    ...mapState(["cartUIStatus"])
-  }
+    ...mapState(["cartUIStatus", 'clientSecret']),
+  },
+  mounted () {
+    this.stripe = Stripe(this.$config.clientToken)
+  },
+  data: () => ({
+    stripe: null,
+  }),
+  methods: {
+    checkout () {
+      this.callPaymentIntent()
+      this.stripe.redirectToCheckout({
+        // Make the id field from the Checkout Session creation API response
+        // available to this file, so you can provide it as argument here
+        // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+
+        sessionId: this.clientSecret
+      }).then(function (result) {
+        console.log('Success')
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer
+        // using `result.error.message`.
+        console.log(result.error.message)
+      })
+    },
+    callPaymentIntent () {
+        // create a PaymentIntent on Stripe with order information
+        this.$store.dispatch("createPaymentIntent");
+    }
+  },
+  computed: {
+    ...mapState([
+      "clientSecret",
+      "cartUIStatus"
+    ]),
+  },
+
 };
 </script>
 
