@@ -1,5 +1,11 @@
-const assert = require("assert")
-const firebase = require("@firebase/testing")
+require('dotenv').config()
+import {
+  initializeTestApp,
+  initializeAdminApp,
+  clearFirestoreData,
+  assertSucceeds,
+  assertFails
+} from "@firebase/testing";
 
 /**
  * Test database rules
@@ -7,48 +13,47 @@ const firebase = require("@firebase/testing")
  * Bypassing security rules using firebase-admin
 */
 
-const ProjectID = 'estore-1597310330087'
 const myId = "user_abc";
 const theirId = "user_xyz"
 const myAuth = { uid: myId, email: 'abc@xyz.com' }
+const ProjectID = process.env.projectId
+console.log('ProjectId = ' + ProjectID);
 
+/* create client test app */
 function getFirestore(auth) {
-  /* create client test app */
-  return firebase.initializeTestApp({
-    projectId: ProjectID, auth: auth
-  }).firestore();
+  return initializeTestApp({ projectId: ProjectID, auth: auth }).firestore();
 }
 
 /* Bypass security rules */
 function getAdminFirestore() {
-  return firebase.initializeAdminApp({ projectId: ProjectID }).firestore();
+  return initializeAdminApp({ projectId: ProjectID }).firestore();
 }
 
 async function clearDatabase() {
-  await firebase.clearFirestoreData({projectId: ProjectID});
+  await clearFirestoreData({ projectId: ProjectID });
 }
 
-beforeEach(async() => {
+/* test setup and teardown fixtures */
+beforeEach(async () => {
   await clearDatabase()
 });
 
-/** when using jest */
-afterAll(async() => {
-// after(async() => {
-    await clearDatabase()
+afterAll(async () => {
+  await clearDatabase()
 });
 
+/* Test suite */
 describe("our Social app", () => {
-  test("Understand basic addition", () => {
-    assert.equal(2 + 2, 4)
+  test("sample addition test 2+2=4", () => {
+    expect(2 + 2).toBe(4)
   });
-  // test("Understand basic addition failing", () => {
-  //   assert.equal(2+2, 43)
-  // })
   test("can read from read-only database", async () => {
     const db = getFirestore(null);
+    console.log(db);
     const testDoc = db.collection("readonly").doc("testDoc");
-    await firebase.assertSucceeds(testDoc.get());
+    console.log(testDoc);
+    // debugger;
+    await assertSucceeds(testDoc.get());
     /* but document is not there?
         test passes because we get a empty snapshot
     */
@@ -56,7 +61,7 @@ describe("our Social app", () => {
   test("can't write in readonly database", async () => {
     const db = getFirestore(null);
     const testDoc = db.collection("readonly").doc("testDoc");
-    await firebase.assertFails(testDoc.set({
+    await assertFails(testDoc.set({
       foo: 'bar'
     }));
   })
@@ -64,17 +69,17 @@ describe("our Social app", () => {
     const db = getFirestore(myAuth);
     /* FirebaseError: 7 PERMISSION_DENIED: */
     const testDoc = db.collection("users").doc(myId);
-    await firebase.assertSucceeds(testDoc.set({ foo: 'bar' }));
+    await assertSucceeds(testDoc.set({ foo: 'bar' }));
   })
   test("can't write a document with different ID as user", async () => {
     const db = getFirestore(myAuth);
     const testDoc = db.collection("users").doc(theirId);
-    await firebase.assertFails(testDoc.set({ foo: 'bar' }));
+    await assertFails(testDoc.set({ foo: 'bar' }));
   })
   test("can read posts marked public", async () => {
     const db = getFirestore(null);                       /* not signed in user */
     const testQuery = db.collection("posts").where("visibility", "==", "public")
-    await firebase.assertSucceeds(testQuery.get());
+    await assertSucceeds(testQuery.get());
   })
   /**
    * How does it passes? we dont even have a post collection yet!
@@ -83,24 +88,24 @@ describe("our Social app", () => {
   test("can query personal posts", async () => {
     const db = getFirestore(myAuth);                       /* not signed in user */
     const testQuery = db.collection("posts").where("authorId", "==", myId)
-    await firebase.assertSucceeds(testQuery.get());
+    await assertSucceeds(testQuery.get());
   })
   test("can query all posts", async () => {
     const db = getFirestore(null);
     const testQuery = db.collection("posts");
-    await firebase.assertFails(testQuery.get());
+    await assertFails(testQuery.get());
   })
   test("can read a single public post", async () => {
     const docId = "public_post"
     const admin = getAdminFirestore()
     /* access as admin */
     const testDoc = admin.collection("posts").doc(docId);
-    await testDoc.set({authorId: theirId, visibility: 'public'})
+    await testDoc.set({ authorId: theirId, visibility: 'public' })
 
     const db = getFirestore(null);
     /* access as client or user */
     const testRead = db.collection('posts').doc(docId)
-    await firebase.assertSucceeds(testRead.get());
+    await assertSucceeds(testRead.get());
   })
 })
 

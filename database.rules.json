@@ -1,6 +1,13 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    // collection name
+    "games": {
+      // primary key
+      "gameId": {
+        ".read": "auth != null || data.child('isPublic').val() === true",
+        ".write": "auth != null"
+      }
+    }
   }
 }
+/* Rules cascade */
