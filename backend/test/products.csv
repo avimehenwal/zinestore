@@ -1,0 +1,9 @@
+ID,name,description,price,currency,image
+1,one,product description one,1000,USD,https://source.unsplash.com/random
+2,two,product description two,2000,USD,https://picsum.photos/200/300
+3,three,product description three,3000,USD,https://picsum.photos/200/300
+4,four,product description four,4000,USD,https://picsum.photos/200/300
+5,five,product description five,5000,USD,https://picsum.photos/200/300
+6,six,product description six,6000,USD,https://picsum.photos/200/301
+7,seven,product description seven,7000,USD,https://picsum.photos/200/302
+8,eight,product description eight,8000,USD,https://picsum.photos/200/303

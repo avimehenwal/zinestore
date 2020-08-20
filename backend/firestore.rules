@@ -33,5 +33,9 @@ service cloud.firestore {
         (resource.data.authorId == request.auth.uid);
       allow write: if (request.auth.uid == userId);
     }
+    match /testCollection/{Id} {
+      allow read: if true;
+      allow write: if true;
+    }
   }
 }

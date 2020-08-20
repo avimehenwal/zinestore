@@ -9,6 +9,7 @@
     "fs": "firebase emulators:start --only firestore --import firestoreDump --export-on-exit firestoreDump",
     "db": "firebase emulators:start --only database --export-on-exit databaseDump --import databasDump ",
     "debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "test:watch": "yarn jest --watch",
     "test": "jest"
   },
   "devDependencies": {
@@ -16,6 +17,7 @@
     "@babel/preset-env": "^7.11.0",
     "@firebase/testing": "^0.20.11",
     "babel-jest": "^26.3.0",
+    "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "firebase-tools": "^8.8.0",
     "jest": "^26.4.1",

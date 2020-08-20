@@ -1,0 +1,66 @@
+[
+  {
+    "ID": "1",
+    "name": "one",
+    "description": "product description one",
+    "price": "1000",
+    "currency": "USD",
+    "image": "https://source.unsplash.com/random"
+  },
+  {
+    "ID": "2",
+    "name": "two",
+    "description": "product description two",
+    "price": "2000",
+    "currency": "USD",
+    "image": "https://picsum.photos/200/300"
+  },
+  {
+    "ID": "3",
+    "name": "three",
+    "description": "product description three",
+    "price": "3000",
+    "currency": "USD",
+    "image": "https://picsum.photos/200/300"
+  },
+  {
+    "ID": "4",
+    "name": "four",
+    "description": "product description four",
+    "price": "4000",
+    "currency": "USD",
+    "image": "https://picsum.photos/200/300"
+  },
+  {
+    "ID": "5",
+    "name": "five",
+    "description": "product description five",
+    "price": "5000",
+    "currency": "USD",
+    "image": "https://picsum.photos/200/300"
+  },
+  {
+    "ID": "6",
+    "name": "six",
+    "description": "product description six",
+    "price": "6000",
+    "currency": "USD",
+    "image": "https://picsum.photos/200/301"
+  },
+  {
+    "ID": "7",
+    "name": "seven",
+    "description": "product description seven",
+    "price": "7000",
+    "currency": "USD",
+    "image": "https://picsum.photos/200/302"
+  },
+  {
+    "ID": "8",
+    "name": "eight",
+    "description": "product description eight",
+    "price": "8000",
+    "currency": "USD",
+    "image": "https://picsum.photos/200/303"
+  }
+]
