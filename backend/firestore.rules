@@ -12,7 +12,26 @@ service cloud.firestore {
     // all client requests to your Firestore database will be denied until you Update
     // your rules
     match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2020, 9, 15);
+      // allow read, write: if request.time < timestamp.date(2020, 9, 15);
+
+      // principle of least privilage
+      allow read, write: if false;
+    }
+    // readonly database
+    match /readonly/{docID} {
+      allow read: if true;
+      allow write: if false;
+    }
+    // capture {userId}
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if (request.auth.uid == userId);
+    }
+    // allow only posts which are flagged visible and by a certain author
+    match /posts/{postId} {
+      allow read: if (resource.data.visibility == 'public') ||
+        (resource.data.authorId == request.auth.uid);
+      allow write: if (request.auth.uid == userId);
     }
   }
 }
