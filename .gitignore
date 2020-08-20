@@ -105,3 +105,6 @@ dist
 
 # custom
 GITMESSAGE.md
+
+# emulator database
+functions/database_export/

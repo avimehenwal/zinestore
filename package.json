@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@firebase/testing": "^0.20.11"
+  },
+  "scripts": {
+    "test": "yarn --cwd backend/test/ test",
+    "test:install": "yarn --cwd backend/test/ install"
+  }
+}

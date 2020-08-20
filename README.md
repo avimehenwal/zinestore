@@ -26,6 +26,14 @@ firebase functions:config:get
     this.getStripeSessionId();
   },
 ```
+## Issues
+
+* How to backup and restore cloud db
+
+## Related Work
+
+* https://github.com/nendonerd/wizardzines
+* https://github.com/tildetown/zine
 
 #### :v: Get in touch with me
 
