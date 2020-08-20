@@ -1,12 +1,15 @@
 {
-  "name": "test",
+  "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
     "start": "firebase emulators:start",
-    "debug": "node --inspect-brk node_modules/.bin/jest --runInBand"
+    "fn": "firebase emulators:start --only functions --inspect-functions",
+    "fs": "firebase emulators:start --only firestore --import firestoreDump --export-on-exit firestoreDump",
+    "db": "firebase emulators:start --only database --export-on-exit databaseDump --import databasDump ",
+    "debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",

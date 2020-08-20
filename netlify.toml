@@ -3,4 +3,4 @@
   command = "yarn generate"
   publish = "dist"
 
-[context.deploy-preview]
+# Disable previews. got only 300 build minutes per month.

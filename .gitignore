@@ -106,6 +106,8 @@ dist
 # custom
 GITMESSAGE.md
 
-# emulator database
+# emulator dumps
 functions/database_export/
 backend/test-report.html
+backend/databaseDump
+backend/firestoreDump
