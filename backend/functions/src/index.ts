@@ -3,6 +3,8 @@ import functions = require('firebase-functions');
 import axios from 'axios'
 // import os = require('os');
 // const base = (os.hostname().match(/dynac/)) ? 'http://localhost:3000' : 'https://zinestore.netlify.app/'
+// console.log(`base URL = ${base}`);
+
 // const cors = require('cors')({ origin: true });
 // const stripe = require('stripe')(functions.config().stripe.key)
 // functions.logger.info('Using RootURL : ' + base)
@@ -10,6 +12,12 @@ import admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.addMessage = functions.https.onRequest(async (req, res) => {
+  // functions.logger.log("Hello from info. Here's an object:", req);
+  // functions.logger.log(Object.keys(req));
+  // headers, baseUrl
+  // headers, baseUrl
+  functions.logger.info(req.headers)
+  functions.logger.info(req.baseUrl)
   const original = req.query.text;
   const writeResult = await admin.firestore().collection('messages').add({ original: original });
   res.json({ result: `Message with ID: ${writeResult.id} added.` });

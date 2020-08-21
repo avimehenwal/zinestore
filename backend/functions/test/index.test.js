@@ -7,7 +7,7 @@ const test = require('firebase-functions-test')({
 }, './test/estore-1597310330087-271c0dcec381.json');
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
-const addMessageUrl = functions.config().local.add-message-url;
+const addMessageUrl = functions.config().dev.add_message;
 
 // 2. config mock
 

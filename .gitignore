@@ -111,3 +111,4 @@ functions/database_export/
 backend/test-report.html
 backend/databaseDump
 backend/firestoreDump
+backend/functions/test/runtimeconfig.json
