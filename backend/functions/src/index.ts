@@ -1,11 +1,11 @@
 require('dotenv').config()
 import functions = require('firebase-functions');
-import os = require('os');
 import axios from 'axios'
-const base = (os.hostname().match(/dynac/)) ? 'http://localhost:3000' : 'https://zinestore.netlify.app/'
+// import os = require('os');
+// const base = (os.hostname().match(/dynac/)) ? 'http://localhost:3000' : 'https://zinestore.netlify.app/'
 // const cors = require('cors')({ origin: true });
 // const stripe = require('stripe')(functions.config().stripe.key)
-functions.logger.info('Using RootURL : ' + base)
+// functions.logger.info('Using RootURL : ' + base)
 import admin = require('firebase-admin');
 admin.initializeApp();
 

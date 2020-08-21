@@ -8,6 +8,7 @@
     "nuxt",
     "stripe",
     "structure",
-    "firebase-db"
+    "firebase-db",
+    "jest"
   ]
 }
