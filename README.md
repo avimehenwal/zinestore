@@ -34,6 +34,7 @@ firebase functions:config:get
 
 * https://github.com/nendonerd/wizardzines
 * https://github.com/tildetown/zine
+* refer personal project ~/EXP/googleCloudFunction
 
 #### :v: Get in touch with me
 

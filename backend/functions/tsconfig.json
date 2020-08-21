@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "strict": true,
+    // "moduleResolution": "node",
+    "allowJs": true
+  },
+  "compileOnSave": true,
+  "include": [
+    "src"
+  ]
+}

@@ -194,4 +194,9 @@ module.exports = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  /**
+   * Attempt to collect and print open handles preventing Jest from exiting cleanly. Use this in cases where you need to use --forceExit in order for Jest to exit to potentially track down the reason. This implies --runInBand, making tests run serially. Implemented using async_hooks. This option has a significant performance penalty and should only be used for debugging.
+   */
+  detectOpenHandles: true
 };
