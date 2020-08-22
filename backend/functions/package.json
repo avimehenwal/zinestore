@@ -5,6 +5,7 @@
     "lint": "eslint .",
     "serve:debug": "yarn build | firebase emulators:start --only functions,firestore --inspect-functions",
     "serve": "yarn build | firebase emulators:start --only functions,firestore",
+    "serve:fn": "yarn build | firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
@@ -20,6 +21,7 @@
     "cors": "^2.8.5",
     "firebase-admin": "^9.1.1",
     "firebase-functions": "^3.10.0",
+    "googleapis": "^59.0.0",
     "stripe": "^8.89.0"
   },
   "devDependencies": {

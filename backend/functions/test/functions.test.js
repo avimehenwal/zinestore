@@ -3,7 +3,7 @@ const functions = require('firebase-functions');
 const ENV = require('./runtimeconfig.json')
 const axios = require('axios')
 
-// console.log(ENV.dev.add_message.url);
+console.log(ENV.dev.add_message.url);
 
 const header = {
   'X-Custom-Header': 'foobar'

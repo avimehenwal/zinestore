@@ -112,3 +112,4 @@ backend/test-report.html
 backend/databaseDump
 backend/firestoreDump
 backend/functions/test/runtimeconfig.json
+backend/functions/src/*.json
