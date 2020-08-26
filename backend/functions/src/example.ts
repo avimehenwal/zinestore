@@ -8,8 +8,8 @@ import axios from 'axios'
 // const cors = require('cors')({ origin: true });
 // const stripe = require('stripe')(functions.config().stripe.key)
 // functions.logger.info('Using RootURL : ' + base)
-import admin = require('firebase-admin');
-admin.initializeApp();
+// import admin = require('firebase-admin');
+// admin.initializeApp();
 
 exports.addMessage = functions.https.onRequest(async (req, res) => {
   // functions.logger.log("Hello from info. Here's an object:", req);

@@ -4,6 +4,7 @@
     "firebase-fn",
     "netlify",
     "config",
+    "backend",
     "router",
     "nuxt",
     "stripe",
