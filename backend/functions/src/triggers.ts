@@ -2,10 +2,12 @@
  * STUB webhooks
  * use them wisely as they can easily cause cyclic/circular dependency
  * https://en.wikipedia.org/wiki/Circular_dependency
+ *
+ * use the same collection as CRUD
  */
 import * as functions from 'firebase-functions';
+import { collection } from './common';
 
-const collection = 'test';
 const trigger = functions.firestore.document(collection + '/{documentId}');
 
 /**

@@ -6,3 +6,4 @@
 // 200
 // 201 Created
 
+export const collection = 'fromConfigCollection';

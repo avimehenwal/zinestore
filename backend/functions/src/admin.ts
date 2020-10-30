@@ -109,11 +109,11 @@ import * as admin from "firebase-admin";
  */
 class CRUD {
   admin: any;
-  collection: string = 'test';
   dummyData: Object = { fname: 'avi', lName: 'mehenwal' };
   db: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>;
+  collection: string;
 
-  constructor(collection: string) {
+  constructor(collection: string = 'fakeCollection') {
     this.collection = collection;
     this.admin = admin.initializeApp({
       /** REVIEW supress error, expects type string
@@ -139,11 +139,12 @@ class CRUD {
     return id
   }
 
-  read = async (primaryKey: string = '6dXuiXtQeTZsnIcoQR23') => {
+  read = async (primaryKey: string) => {
     const snapshot = await this.db.doc(primaryKey).get();
     if (!snapshot.exists) {
-      console.log('No such document!');
-      return { error: 'No such document!'}
+      const msg = `No such document! with key: ${primaryKey}`;
+      console.log(msg);
+      return { error: msg}
     } else {
       const result = snapshot.data();
       Object.assign(result, { id: snapshot.id });
@@ -165,7 +166,7 @@ class CRUD {
     return data
   }
 
-  size = async () => {
+  collectionSize = async () => {
     const count = (await this.db.get()).size;
     console.log('collection size : ' + count);
     return count
@@ -177,22 +178,5 @@ class CRUD {
 
 }
 
-/**
- * Algorithm
- * [ ] create a default record and then print it
- *
- * NOTE naming convention
- * suffix C for collections, just like Interfaces, but in reverse
- */
 
-(async() => {
-  let testCollection = new CRUD('test');
-  const newDoc = await testCollection.create();
-  const doc =  await testCollection.read(newDoc);
-  console.log(doc);
-
-  // testCollection.readAll();
-})();
-
-export = CRUD;
-
+export default CRUD;
